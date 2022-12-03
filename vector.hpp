@@ -6,26 +6,42 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:41:58 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/12/02 17:59:31 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/12/03 17:03:08 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#pragma once
+ 
 #include <vector>
 #include <iostream>
 #include <memory>
 
 namespace ft
 {
+template <typename container>
+class Iterator
+{
+public:
+	// constructors
+	Iterator();
+	Iterator(const Iterator &other);
+	Iterator & operator=(Iterator & other);
+	
+	
+};
+
 template <class T, class Alloc = std::allocator<T> >
 class vector
 {  
 public:
-	typedef T									value_type;
-	typedef Alloc								allocator_type;
-	typedef value_type&							reference;
-	typedef const value_type&					const_reference;
-	typedef typename allocator_type::pointer	pointer;
-	typedef typename allocator_type::size_type	size_type;
+	typedef T										value_type;
+	typedef Alloc									allocator_type;
+	typedef typename allocator_type::size_type		size_type;
+	typedef typename allocator_type::difference_type	difference_type;
+	typedef value_type&								reference;
+	typedef const value_type&						const_reference;
+	typedef typename allocator_type::pointer		pointer;
+	typedef typename allocator_type::const_pointer	const_pointer;
 
 	// consturctors
 	vector()
@@ -37,7 +53,7 @@ public:
 	{
 	};
 
-	explicit vector(size_type count, const value_type& value = T(), const  allocator_type &alloc = allocator_type())
+	explicit vector(size_type count, const value_type& value = value_type(), const  allocator_type &alloc = allocator_type())
 	:_alloc(alloc), _size(count), _capacity(count)
 	{
 		_data = _alloc.allocate(count);
@@ -47,11 +63,60 @@ public:
 		}
 		
 	}
+
+	// template <class InputIterator> 
+	//vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type());
 	vector( const vector& other )
 	:_alloc(other._alloc), _size(other._size), _capacity(other._capacity)
 	{
 		
 	}
+
+	// Destructor
+	~vector(){
+		for (int i = 0; i < _size; i++)
+		{
+			_alloc.destroy(_data + i);
+		}
+	};
+
+	vector& operator=( const vector& other )
+	{
+		this->_alloc = other._alloc;
+		this->_data = other._data;
+		this->_size = other._size;
+		this->_capacity = other._capacity;
+		return *this;
+	}
+
+	// template <class InputIterator>  void assign (InputIterator first, InputIterator last);
+	void assign(size_type count, const value_type& val)
+	{
+		if (count > _capacity)
+		{
+			for (size_type i = 0; i < _size; i++)
+				_alloc.destroy(_data + i);
+			_alloc.deallocate(_data, _size);
+			_data = _alloc.allocate(count);
+			for (size_type i = 0; i < count; i++)
+				_alloc.construct(_data + i, val);
+		}
+		else
+		{
+			for (size_type i = 0; i < count; i++)
+			{
+				_data[i] = val;
+			}
+			for (size_type i = count; i < _size; i++)
+			{
+				_alloc.destroy(_data + i);
+			}		
+		}
+		_size = count;
+		_capacity = count;
+	}
+
+	// Allocator
 	allocator_type get_allocator() const
 	{
 		return _alloc;
@@ -246,18 +311,6 @@ public:
 		other._capacity = tmp_capacity;
 	}
 	
-	
-	
-
-	
-	
-
-	~vector(){
-		for (int i = 0; i < _size; i++)
-		{
-			_alloc.destroy(_data + i);
-		}
-	};
 
 private:
 	allocator_type	_alloc;

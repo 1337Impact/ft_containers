@@ -11,13 +11,17 @@ public:
     int b;
     test(/* args */);
     test(int n):b(n){}
-    test(const test&t){
-        // b = new int();
-        // *b = *(t.b);
+    test(const test&t):b(t.b){
         std::cout << "copy constructed\n";
     }
     void print(){
         std::cout << "printed" << std::endl;
+    }
+    test & operator= (const test & other)
+    {
+        this->b  = other.b;
+        std::cout << "assign called" << std::endl;
+        return *this;
     }
     ~test();
 };
@@ -33,27 +37,40 @@ test::~test()
 }
 
 
-
+#include <iterator>
 int main()
 {
+    std::iterator_traits<vector<int> > it;
+    it++;
+
+
     // std::cout << "********* ft ********" << std::endl;
     // ft::vector<test> v(10);
     // v.clear();
-    std::cout << "********* std ********" << std::endl;
+    // std::cout << "********* std ********" << std::endl;
     // std::vector<test> v1;
     // std::vector<test> v2;
     // v1.push_back(test(42));
     // v2.push_back(test(69));
     // std::cout << (v1.front()).b << std::endl;
-    ft::vector<int> v1(3, 98);
-    int * d = v1.data();
-    std::cout << *(d+1) << std::endl;
+    // std::vector<int> v1(3, 42);
+    // // int * d = v1.data();
+    // std::cout << "*********" << std::endl; 
+    // v1.assign(3, 65);
+    // std::cout << v1.front() << std::endl;
+    // std::cout << "capacity: " << v1.capacity() << std::endl;
+    // std::cout << "size: " << v1.size() << std::endl;
+
+    // std::vector<test> v1(3, test(45));
+    // std::vector<test> v2(3, test(32));
+    // std::cout << "*********" << std::endl;
+    // v1.swap(v2);
+    // std::cout << "capacity: " << v1.capacity() << std::endl;
+    // std::cout << "size: " << v1.size() << std::endl;
 
     
 
-    // std::cout << "*********" << std::endl;
     // v2.resize(3);
-    // std::cout << "capacity: " << v2.capacity() << std::endl;
     // std::cout << "size: " << v2.size() << std::endl;
 
 
