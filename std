@@ -1,0 +1,59 @@
+c++ test.cpp -o out
+./out
+constructed with value 69
+copy constructed
+copy constructed
+copy constructed
+copy constructed
+distructed
+copy constructed
+copy constructed
+copy constructed
+copy constructed
+distructed
+distructed
+distructed
+distructed
+**********************
+constructed with value 13
+copy constructed
+copy constructed
+copy constructed
+copy constructed
+copy constructed
+distructed
+5
+0x7fabbac00640
+**********************
+copy constructed
+copy constructed
+copy constructed
+copy constructed
+copy constructed
+copy constructed
+copy constructed
+copy constructed
+copy constructed
+distructed
+distructed
+distructed
+distructed
+distructed
+**********************
+value of b: 13
+10
+9
+0x7fabbac02bf0
+distructed
+distructed
+distructed
+distructed
+distructed
+distructed
+distructed
+distructed
+distructed
+distructed
+distructed
+distructed
+distructed

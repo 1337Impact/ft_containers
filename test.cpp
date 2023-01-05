@@ -1,16 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/07 11:16:36 by mbenkhat          #+#    #+#             */
+/*   Updated: 2023/01/05 17:23:02 by mbenkhat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <vector>
 #include <iostream>
 #include <memory>
 #include "vector.hpp"
 
+// template <typename T>
 class test
 {
 private:
     /* data */
 public:
     int b;
-    test(/* args */);
-    test(int n):b(n){}
+    test(/* args */)
+    {
+        std::cout << "constructed\n";
+    }
+    test(int n):b(n){std::cout << "constructed with value " << b << std::endl ;}
     test(const test&t):b(t.b){
         std::cout << "copy constructed\n";
     }
@@ -23,93 +39,53 @@ public:
         std::cout << "assign called" << std::endl;
         return *this;
     }
-    ~test();
+    // test & operator++(int val, int v2)
+    // {
+    //     std::cout << "++ called => " << val << std::endl;
+    //     return *this;
+    // }
+    std::string get_b(){
+        std::string b("hello world");
+        std::cout << "called" << std::endl;
+        return b;
+    }
+    const std::string get_b() const
+    {
+        std::cout << "const called" << std::endl;
+        const std::string b("hello world");
+        return b;
+    }
+ 
+    ~test()
+    {
+        std::cout << "distructed\n";
+    }
 };
-test::test(/* args */)
-{
-    // b = new int();
-    std::cout << "constructed\n";
-}
-test::~test()
-{
-    // delete b;
-    std::cout << "distructed\n";
-}
+
+#define tmp std
 
 
 #include <iterator>
 int main()
 {
-    std::iterator_traits<vector<int> > it;
-    it++;
+    tmp::vector<test> tt(4, test(69));
+    tt.reserve(10);
 
-
-    // std::cout << "********* ft ********" << std::endl;
-    // ft::vector<test> v(10);
-    // v.clear();
-    // std::cout << "********* std ********" << std::endl;
-    // std::vector<test> v1;
-    // std::vector<test> v2;
-    // v1.push_back(test(42));
-    // v2.push_back(test(69));
-    // std::cout << (v1.front()).b << std::endl;
-    // std::vector<int> v1(3, 42);
-    // // int * d = v1.data();
-    // std::cout << "*********" << std::endl; 
-    // v1.assign(3, 65);
-    // std::cout << v1.front() << std::endl;
-    // std::cout << "capacity: " << v1.capacity() << std::endl;
-    // std::cout << "size: " << v1.size() << std::endl;
-
-    // std::vector<test> v1(3, test(45));
-    // std::vector<test> v2(3, test(32));
-    // std::cout << "*********" << std::endl;
-    // v1.swap(v2);
-    // std::cout << "capacity: " << v1.capacity() << std::endl;
-    // std::cout << "size: " << v1.size() << std::endl;
-
+    std::cout << "**********************" << std::endl;
+    tmp::vector<test> t2(5, test(13));
     
+    std::cout << t2.capacity() << std::endl;
+    std::cout << t2.data() << std::endl;
 
-    // v2.resize(3);
-    // std::cout << "size: " << v2.size() << std::endl;
+    std::cout << "**********************" << std::endl;
+    t2.insert(t2.begin()+1, tt.begin(), tt.end());
+    // t2.insert(t2.begin()+1, 6, test(68));
+    std::cout << "**********************" << std::endl;
+    std::cout << "value of b: " << (*(t2.begin() + 7)).b << std::endl;
 
-
-
-
-
-    // v2.reserve(4);
-    // std::allocator<test> n;
-    // std::allocator<test>::pointer t = n.allocate(10);
-    // // std::cout << t[0] << std::endl;
-    // // (t[0])(test());
-    // n.construct(t, test());
-    // test *t = 
-
-
-    std::cout << "end\n";
-
-
-
-    // std::allocator<test> n;
-    // test *t_ptr;
-    // {
-    // t_ptr = n.allocate(2);
-    // n.construct(t_ptr);
-    // n.destroy(t_ptr);
-    // // n.construct(t_ptr + 1);
-    // std::cout << t_ptr << std::endl;
-    // }
-
-
-    // std::cout << n.address() << std::endl;
-    // n.construct(n.address());
-    // std::allocator<int> aloc
-    // std::cout << v.size() << std::endl;
-    // std::vector<int> v(2);
-    // std::vector<int> v2(v);
-    // v[0] = 69;
-    // v2[0] = 10;
-    // std::cout << v2.capacity() << std::endl;
-    // std::cout << v2[0] << std::endl; 
-
+    std::cout << t2.capacity() << std::endl;
+    std::cout << t2.size() << std::endl;
+    std::cout << t2.data() << std::endl;
+    
+    return (0);
 }
