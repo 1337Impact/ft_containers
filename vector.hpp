@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:41:58 by mbenkhat          #+#    #+#             */
-/*   Updated: 2023/01/05 19:08:20 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2023/01/08 09:00:55 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <iostream>
 #include <memory>
 #include <iterator>
-// #include "iterator_traits.hpp"
 
 namespace ft
 {
@@ -51,7 +50,10 @@ public:
 	{
 		return (*_data);
 	}
-	reference operator->();
+	pointer operator->()
+	{
+		return _data;
+	}
 	
 	VectorIterator operator++ (int)
 	{

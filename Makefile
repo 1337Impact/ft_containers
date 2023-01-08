@@ -12,3 +12,7 @@ fclean:
 
 test:
 	c++ -Wall -Wextra -Werror -std=c++98 vector_test.cpp -o test
+
+map:
+	c++ -Wall -Wextra -Werror -std=c++98 map_test.cpp -o test
+	./test

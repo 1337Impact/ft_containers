@@ -6,11 +6,12 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 11:08:13 by mbenkhat          #+#    #+#             */
-/*   Updated: 2023/01/05 19:08:40 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2023/01/06 09:05:41 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.hpp"
+#include <vector>
 
 #define tmp ft
 
