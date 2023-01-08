@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 08:34:37 by mbenkhat          #+#    #+#             */
-/*   Updated: 2023/01/08 09:08:04 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2023/01/08 21:21:30 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "map.hpp"
 #include <map>
 
-#define tmp std
+#define tmp ft
 
 int main()
 {
@@ -40,34 +40,33 @@ int main()
     // std::cout << r->value.second << std::endl;
     // t.remove(t._root, r);
     // t.Inorder(t._root);
+    // typedef tmp::map<int, std::string>::iterator iter;
 
-    tmp::map<int, std::string> m;
-    m.insert(std::make_pair(20, "20!"));
-    m.insert(std::make_pair(50, "50!"));
-    m.insert(std::make_pair(60, "60!"));
-    m.insert(std::make_pair(12, "12!"));
-    // std::cout << m.at(20) << std::endl;
-    // std::cout << m.at(50) << std::endl;
-    tmp::map<int, std::string>::iterator it = m.begin();
-    // for ()
-    // it++;
-    tmp::map<int, std::string>::iterator it2 = it;
-    it++;
-    // it2++;
+    // tmp::map<int, std::string> m;
+    // m.insert(std::make_pair(50, "50!"));
+    // m.insert(std::make_pair(60, "60!"));
+    // m.insert(std::make_pair(12, "12!"));
+    // m.insert(std::make_pair(20, "20!"));
+    // std::pair<iter, bool> p = m.insert(std::make_pair(20, "20!"));
+    std::cout << "********************" << std::endl;
+    // iter it = m.end();
+    // std::cout << m[120] << std::endl;
     // std::cout << m.size() << std::endl;
-    std::cout << it2->second << std::endl;
-    
-    // std::vector<int> v;
-    // v.push_back(1);
-    // v.push_back(2);
-    // v.push_back(3);
-    // v.push_back(4);
-    // std::vector<int>::iterator it = v.end();
-    // std::vector<int>::iterator it2 = v.begin();
+
+    // iter  it = m.begin();
+    // iter  it2 = m.begin();
     // it++;
-    // it2++;
-    // std::cout << it.base() << std::endl;
-    // std::cout << *it<< std::endl;
-    // std::cout << it2.base() << std::endl;
-    // std::cout << *it2 << std::endl;
+    // std::cout << it->first << std::endl;
+    // std::cout << it2->first << std::endl;
+    // std::cout << it2->first << std::endl;
+    // std::cout << (it == it2) << std::endl;
+    // for (; it != m.end(); it++)
+    //     std::cout << it->first << "    " << it->second << std::endl;
+
+    std::vector<int> v(12);
+    std::vector<int>::iterator it = v.begin();
+    std::vector<int>::iterator it2 = v.begin();
+    std::cout << (it == it2) << std::endl;
+    
+        
 }
