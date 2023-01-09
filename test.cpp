@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 11:16:36 by mbenkhat          #+#    #+#             */
-/*   Updated: 2023/01/05 17:23:02 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2023/01/09 08:49:52 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,30 +62,19 @@ public:
     }
 };
 
+void take_it(test & obj = (test a = test()))
+{
+    test &ref = obj;
+}
+
 #define tmp std
 
 
 #include <iterator>
 int main()
 {
-    tmp::vector<test> tt(4, test(69));
-    tt.reserve(10);
-
-    std::cout << "**********************" << std::endl;
-    tmp::vector<test> t2(5, test(13));
-    
-    std::cout << t2.capacity() << std::endl;
-    std::cout << t2.data() << std::endl;
-
-    std::cout << "**********************" << std::endl;
-    t2.insert(t2.begin()+1, tt.begin(), tt.end());
-    // t2.insert(t2.begin()+1, 6, test(68));
-    std::cout << "**********************" << std::endl;
-    std::cout << "value of b: " << (*(t2.begin() + 7)).b << std::endl;
-
-    std::cout << t2.capacity() << std::endl;
-    std::cout << t2.size() << std::endl;
-    std::cout << t2.data() << std::endl;
+    test t(13);
+    take_it(t);
     
     return (0);
 }

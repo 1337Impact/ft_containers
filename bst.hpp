@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 20:17:36 by mbenkhat          #+#    #+#             */
-/*   Updated: 2023/01/08 21:21:56 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2023/01/09 15:45:57 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ template <class Key, class T>
 class bst
 {
 public:
-    typedef Key                 key_type;
-    typedef T                   value_type;
-    typedef std::pair<const Key, T>   pair_type;
-    typedef pair_type*          pointer;
-    typedef size_t              size_type;
-    typedef	std::vector<pointer>	vector_type;
-	typedef typename vector_type::iterator vector_iterator;
+    typedef Key                         key_type;
+    typedef T                           value_type;
+    typedef std::pair<const Key, T>     pair_type;
+    typedef pair_type*                  pointer;
+    typedef size_t                      size_type;
+    typedef	std::vector<pointer>	    vector_type;
+	typedef typename vector_type::iterator mapper_type;
 	struct Node
 	{
 		pointer     value;
@@ -47,14 +47,12 @@ public:
 public:
     Node* _root;
     size_type _size;
-    vector_type _v;
-	vector_iterator v_it;
+    vector_type _mapper;
     
 
     bst():_root(0), _size(0){}
-    bst(const bst & other):_root(other._root), _size(0), _v(){
+    bst(const bst & other):_root(other._root), _size(0), _mapper(){
         this->tree_mapper(this->_root);
-        v_it = _v.begin(); 
     }
     ~bst(){}
 
@@ -62,7 +60,6 @@ public:
 	{
 		if (!root){
             child->index = _size;
-            _size++;
 			return child;
 		}
 		else if (root->value->first < child->value->first)
@@ -89,6 +86,8 @@ public:
                 _root = this->insert(_root, a_node);
             else
                 this->insert(_root, a_node);
+            this->mapper_reset();
+            this->_size++;
             return (std::make_pair(1, a_node->index));
         }
         return (std::make_pair(0, tmp->index));
@@ -139,10 +138,17 @@ public:
         }
         else
         {
-            Node* temp = find_min(root->r_ch);
-            _node->value = temp->value;
-            remove(root->r_ch, temp);
+            Node* tmp = find_min(root->r_ch);
+            _node->value = tmp->value;
+            remove(root->r_ch, tmp);
         }
+    }
+
+    void remove(Node *node)
+    {
+        this->remove(this->_root, node);
+        mapper_reset();
+        this->_size--;
     }
     void Inorder(Node* root)
     {
@@ -159,13 +165,27 @@ public:
         return (_size);
     }
 
+    void mapper_reset( void ) 
+    {
+        _mapper.clear();
+        this->tree_mapper(this->_root);
+    }
     void tree_mapper(Node* root)
     {
         if (!root) {
             return ;
         }
         tree_mapper(root->l_ch);
-		_v.push_back(root->value);
+		_mapper.push_back(root->value);
         tree_mapper(root->r_ch);
+    }
+
+    mapper_type begin( void )
+    {
+        return _mapper.begin();
+    }
+    mapper_type end( void )
+    {
+        return _mapper.end();
     }
 };

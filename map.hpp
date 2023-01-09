@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 20:04:27 by mbenkhat          #+#    #+#             */
-/*   Updated: 2023/01/08 21:22:16 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2023/01/09 15:43:59 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,29 +27,26 @@ template <class Iter>
 class MapIterator
 {
 public:
-	typedef Iter 					tree_type;
-	typedef	typename Iter::pair_type pair_type;
-	typedef typename Iter::Node 	node;
-	typedef pair_type&				reference;
-	typedef pair_type*				pointer;
-	typedef std::ptrdiff_t 			difference_type;
-	typedef typename tree_type::mapper	iterator_mapper;
+	typedef Iter 							tree_type;
+	typedef	typename Iter::pair_type 		pair_type;
+	typedef typename Iter::Node 			node;
+	typedef pair_type&						reference;
+	typedef pair_type*						pointer;
+	typedef std::ptrdiff_t 					difference_type;
+	typedef typename tree_type::mapper_type	iterator_mapper;
 	
 
 public:
 	tree_type _tree;
-	iterator_mapper mapper;
+	iterator_mapper _mapper;
 	
 public:
-	MapIterator(){}
-	MapIterator(const tree_type &tree ):_tree(tree)
+	MapIterator(tree_type tree = tree_type()):_tree(tree), _mapper(){}
+	MapIterator(iterator_mapper mapper):_mapper(mapper)
 	{
 	}
-	// MapIterator(const iterator_mapper &mapper ):_tree(tree)
-	// {
-	// }
 	MapIterator(const MapIterator &other)
-	:_tree(other._tree){}
+	:_tree(other._tree), _mapper(other._mapper){}
 	~MapIterator(){}
 	MapIterator & operator = (const MapIterator &other)
 	{
@@ -58,48 +55,48 @@ public:
 	}
 	bool operator==(const MapIterator & other)
 	{
-		return (this->_tree.v_it == other._tree.v_it);
+		return (this->_mapper == other._mapper);
 	}
 	bool operator!=(const MapIterator & other)
 	{
-		return (this->_tree.v_it != other._tree.v_it);
+		return (this->_mapper != other._mapper);
 	}
 	reference operator*(void)
 	{
-		return (*(*this->_tree.v_it));
+		return (*(*this->_mapper));
 	}
 	pointer operator->()
 	{
-		return (*(this->_tree.v_it.base()));
+		return (*(this->_mapper.base()));
 	}
 	
 	MapIterator operator++ (int)
 	{
 		MapIterator<tree_type> tmp(*this);
-		this->_tree.v_it++;
+		this->_mapper++;
 		return (tmp);
 	}
 	MapIterator operator++ (void)
 	{
-		++this->_tree.v_it;
+		++this->_mapper;
 		return (*this);
 	}
 	MapIterator operator-- (int)
 	{
 		MapIterator<tree_type> tmp(*this);
-		this->_tree.v_it--;
+		this->_mapper--;
 		return (tmp);
 	}
 	MapIterator operator-- (void)
 	{
-		--this->_tree.v_it;
+		--this->_mapper;
 		return (*this);
 	}
 // {
 	MapIterator operator+( int nbr )
 	{
 		MapIterator<tree_type> tmp(*this);
-		tmp._tree.v_it = this->_tree.v_it + nbr;
+		tmp._mapper = this->_mapper + nbr;
 		return tmp;
 	}
 
@@ -168,8 +165,8 @@ public:
 	typedef typename allocator_type::size_type       size_type;
 	typedef typename allocator_type::difference_type difference_type;
 	typedef	bst<Key, T>								tree_type;
-	typedef	MapIterator<tree_type>	iterator;
-	typedef	MapIterator<tree_type const>	const_iterator;
+	typedef	MapIterator<tree_type>					iterator;
+	typedef	MapIterator<tree_type const>			const_iterator;
 	
 
 
@@ -213,7 +210,7 @@ public:
 	{
 		t_node *res = _tree.find(_tree._root, key);
 		if (!res)
-			throw std::out_of_range("out of range!");
+			throw std::out_of_range("out ofd range!");
 		return res->value->second;
 	}
 	const mapped_type& at (const key_type& key) const
@@ -263,19 +260,25 @@ public:
 			this->insert(*first);
 	}
 
+	size_type erase (const key_type& k)
+	{
+		t_node *node = _tree.find(_tree._root, k);
+		_alloc.destroy(node->value);
+		_alloc.deallocate(node->value, 1);
+		_tree.remove(node);
+		return(_tree.size());
+	}
 	void erase (iterator position)
 	{
 		this->erase(position->first);
 	}
-	size_type erase (const key_type& k)
-	{
-		t_node *node = _tree.find(_tree._root, k);
-		_tree.remove(_tree._root, node);
-	}
 	void erase (iterator first, iterator last)
 	{
 		for (; first != last; first++)
-			this->erase(first);
+		{
+			// this->erase(first);
+		}
+		
 	}
 	void swap (map& x)
 	{	
@@ -292,19 +295,20 @@ public:
 		x._alloc = tmp._alloc;
 		x._tree = tmp._tree;
 	}
-	// void clear()
-	// {
-		
-	// }
+
+	void clear()
+	{
+		this->erase(this->begin(), this->end());
+	}
 
 	
 	iterator begin()
 	{
-		return iterator(_tree);
+		return iterator(_tree.begin());
 	}
 	iterator end()
 	{
-		return iterator(_tree) + _tree.size();
+		return iterator(_tree.end());
 	}
 	size_type size( void )
 	{
