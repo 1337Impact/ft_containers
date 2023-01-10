@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 20:04:27 by mbenkhat          #+#    #+#             */
-/*   Updated: 2023/01/09 15:43:59 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2023/01/10 15:03:10 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ public:
 	
 
 
-public:
+private:
 	size_type		_size;
 	allocator_type	_alloc;
 	bst<Key, T>		_tree;
@@ -191,8 +191,6 @@ public:
 		this->_size = other._size;
 		return *this;
 	}
-
-
 
 	// Capacity
 	bool empty() const{
@@ -263,9 +261,12 @@ public:
 	size_type erase (const key_type& k)
 	{
 		t_node *node = _tree.find(_tree._root, k);
-		_alloc.destroy(node->value);
-		_alloc.deallocate(node->value, 1);
-		_tree.remove(node);
+		if (node)
+		{
+			_alloc.destroy(node->value);
+			_alloc.deallocate(node->value, 1);
+			_tree.remove(k);
+		}
 		return(_tree.size());
 	}
 	void erase (iterator position)
@@ -274,17 +275,17 @@ public:
 	}
 	void erase (iterator first, iterator last)
 	{
+		std::vector<key_type> v;
 		for (; first != last; first++)
+			v.push_back(first->first);
+		for (size_t i = 0; i < v.size(); i++)
 		{
-			// this->erase(first);
+				this->erase(v[i]);
 		}
-		
 	}
 	void swap (map& x)
 	{	
 		map tmp;
-		// *this = x;
-		// x = tmp;
 		tmp._size = this->_size;
 		tmp._alloc = this->_alloc;
 		tmp._tree = this->_tree;
@@ -300,8 +301,6 @@ public:
 	{
 		this->erase(this->begin(), this->end());
 	}
-
-	
 	iterator begin()
 	{
 		return iterator(_tree.begin());

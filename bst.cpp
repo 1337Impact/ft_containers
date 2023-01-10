@@ -1,78 +1,45 @@
 #include <iostream>
+#include "bst.hpp"
 #include "map.hpp"
 
-// template <class T>
-// struct node
-// {
-//     T data;
-//     node<T> *left_child;
-//     node<T> *right_child;
-//     node(){}
-//     // node(const node<T> &obj){std::cout << "hi";}
-//     ~node(){}
-// };
-
-
-// template <class T>
-// class bst
-// {
-// private:
-//     node<T> *root;
-// public:
-//     bst():root(0){}
-//     ~bst(){}
-//     void insert(const node<T> &child)
-//     {
-//         if (!root)
-//             root = new node<T>(child);
-//         else{
-//             if (child.data <= root->data)
-//             {
-//                 root->left_child = 
-//             }
-//         }
-//     }
-// };
-
-struct t_tree
-{
-    int data;
-    t_tree *parent;
-    t_tree *left_child;
-    t_tree *right_child;
-    t_tree(int val):data(val),left_child(0), right_child(0), parent(0){}
-};
-t_tree *insert(t_tree *root, t_tree *child)
-{
-    if (!root) //last node
-    {
-        return child;
-    }
-    else if(child->data < root->data)
-    {
-        root->left_child = insert(root->left_child, child);
-    }
-    else if(child->data > root->data)
-    {
-        root->right_child = insert(root->right_child, child);
-    }
-    return root;
-}
-
-
+typedef ft::map<int, std::string>::value_type type;
+typedef bst<int, std::string>::mapper_type it;
+typedef bst<int, std::string>::Node* node;
 int main()
 {
-    t_tree root = 13;
-    t_tree child = 12;
-    t_tree child2 = 50;
-    t_tree child3 = 60;
-    insert(0, &root);
-    insert(&root, &child);
-    insert(&root, &child2);
-    insert(&root, &child3);
-    std::cout << root.left_child->data << std::endl;
-    std::cout << root.right_child->data << std::endl;
-    std::cout << root.right_child->right_child->data << std::endl;
+    bst<int, std::string> tree;
+    // type add = std::make_pair(1, "hello");
+    
+    tree.insert(new type(1, "hello"));
+    tree.insert(new type(3, "hello"));
+    tree.insert(new type(5, "hello"));
+    tree.insert(new type(-1, "hello"));
+    tree.insert(new type(12, "hello"));
+
+    // it b = tree.begin();
+    // for (; b != tree.end(); b++)
+    // {
+    //     std::cout << (*b)->first << std::endl;
+    //     node n = tree.find(tree._root, (*b)->first);
+    //     tree.remove(n);
+    // }
+    // node n = tree.find(tree._root, 1);
+    tree.remove(12);
+    tree.remove(1);
+    tree.remove(-1);
+    tree.remove(5);
+    tree.remove(3);
+    // n = tree.find(tree._root, 3);
+    // tree.remove(n);
+    // n = tree.find(tree._root, 5);
+    // tree.remove(n);
+    // n = tree.find(tree._root, -1);
+    // std::cout << n << std::endl;
+    // tree.remove(n);
+    // n = tree.find(tree._root, 12);
+    // tree.remove(n);
+    tree.Inorder(tree._root);
+    std::cout << tree.size() << std::endl;
 }
 // int main()
 // {

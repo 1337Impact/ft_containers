@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 20:17:36 by mbenkhat          #+#    #+#             */
-/*   Updated: 2023/01/09 15:45:57 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2023/01/10 11:30:38 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,11 +116,10 @@ public:
     
         while (current && current->l_ch != NULL)
             current = current->l_ch;
-    
         return current;
     }
  
-    void remove(Node *root, Node *_node)
+    void r_remove(Node *_node)
     {
         if (!_node)
             return ;
@@ -138,20 +137,49 @@ public:
         }
         else
         {
-            Node* tmp = find_min(root->r_ch);
+            Node* tmp = find_min(_node->r_ch);
             _node->value = tmp->value;
-            remove(root->r_ch, tmp);
+            remove(tmp);
         }
     }
 
-    void remove(Node *node)
+    Node* deleteNode(Node* root, key_type key)
     {
-        this->remove(this->_root, node);
-        mapper_reset();
+        if (root == NULL)
+            return NULL;
+        if (key < root->value->first)
+            root->l_ch = deleteNode(root->l_ch, key);
+        else if (key > root->value->first)
+            root->r_ch = deleteNode(root->r_ch, key);
+        else {
+            if (root->l_ch == NULL && root->r_ch == NULL)
+                return NULL;
+            else if (root->l_ch == NULL) {
+                Node* temp = root->r_ch;
+                free(root);
+                return temp;
+            }
+            else if (root->r_ch == NULL) {
+                Node* temp = root->l_ch;
+                free(root);
+                return temp;
+            }
+    
+            Node* temp = find_min(root->r_ch);
+            root->value = temp->value;
+            root->r_ch = deleteNode(root->r_ch, temp->value->first);
+        }
+        return root;
+    }
+    void remove(key_type key)
+    {
+        this->_root = deleteNode(this->_root, key);
         this->_size--;
+        mapper_reset();
     }
     void Inorder(Node* root)
     {
+        
         if (!root) {
             return;
         }

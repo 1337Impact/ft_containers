@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 08:34:37 by mbenkhat          #+#    #+#             */
-/*   Updated: 2023/01/09 15:42:36 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2023/01/10 11:28:53 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,24 @@ int main()
 
 
     tmp::map<int, std::string> m;
-    m.insert(std::make_pair(50, "50!"));
-    m.insert(std::make_pair(60, "60!"));
-    m.insert(std::make_pair(12, "12!"));
-    m.insert(std::make_pair(20, "20!"));
-    m.insert(std::make_pair(-20, "50!"));
-    m.insert(std::make_pair(200, "60!"));
+    // m.insert(std::make_pair(-20, "50!"));
     m.insert(std::make_pair(1, "12!"));
+    m.insert(std::make_pair(2, "12!"));
+    m.insert(std::make_pair(3, "20!"));
+    m.insert(std::make_pair(4, "50!"));
+    m.insert(std::make_pair(5, "60!"));
+    m.insert(std::make_pair(6, "60!"));
     std::cout << "********************" << std::endl;
     // m[20] = "hola";
-    std::cout << "size: " << m.size() << std::endl;
+    // std::cout << "size: " << m.size() << std::endl;
     m.erase(m.begin(), m.end());
-    // m.erase(50);
-    std::cout << "size: " << m.size() << std::endl;
+    // m.erase(1);
+    // m.erase(2);
+    // m.erase(3);
+    // m.erase(5);
+    // std::cout << m.erase(5);
+    // m.erase(6);
+    // std::cout << "size: " << m.size() << std::endl;
     // iter  it2 = m.begin();
     // it2++;
     // std::cout << it->first << std::endl;
@@ -71,6 +76,5 @@ int main()
     iter  it = m.begin();
     for (; it != m.end(); it++)
         std::cout << it->first << "    " << it->second << std::endl;
-    
-        
+    // system("leaks test");
 }
