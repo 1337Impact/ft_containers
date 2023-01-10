@@ -24,11 +24,11 @@ int main()
     //     tree.remove(n);
     // }
     // node n = tree.find(tree._root, 1);
-    tree.remove(12);
-    tree.remove(1);
-    tree.remove(-1);
-    tree.remove(5);
-    tree.remove(3);
+    // tree.remove(12);
+    // tree.remove(1);
+    // tree.remove(-1);
+    // tree.remove(5);
+    // tree.remove(3);
     // n = tree.find(tree._root, 3);
     // tree.remove(n);
     // n = tree.find(tree._root, 5);
@@ -38,8 +38,14 @@ int main()
     // tree.remove(n);
     // n = tree.find(tree._root, 12);
     // tree.remove(n);
-    tree.Inorder(tree._root);
-    std::cout << tree.size() << std::endl;
+    
+    // tree.Inorder(tree._root);
+    node n = tree.find_max(tree._root);
+    for (int i = 0; i < tree.size() ; i++)
+    {
+        std::cout << n->value->first << std::endl;
+        n = tree.previous_node(n);
+    }
 }
 // int main()
 // {

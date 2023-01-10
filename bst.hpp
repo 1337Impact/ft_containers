@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 20:17:36 by mbenkhat          #+#    #+#             */
-/*   Updated: 2023/01/10 11:30:38 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2023/01/10 21:43:34 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,14 +110,6 @@ public:
         return (0);
     }
 
-    Node *find_min(Node* root)
-    {
-        Node* current = root;
-    
-        while (current && current->l_ch != NULL)
-            current = current->l_ch;
-        return current;
-    }
  
     void r_remove(Node *_node)
     {
@@ -215,5 +207,44 @@ public:
     mapper_type end( void )
     {
         return _mapper.end();
+    }
+    
+    Node *find_min(Node* root)
+    {
+        Node* current = root;
+    
+        while (current && current->l_ch != NULL)
+            current = current->l_ch;
+        return current;
+    }
+    Node *next_node(Node *n)
+    {
+        if (n->r_ch)
+            return this->find_min(n->r_ch);
+        Node* p = n->parent;
+        while (p != NULL && n == p->r_ch) {
+            n = p;
+            p = p->parent;
+        }
+        return p;
+    }
+    Node *find_max(Node* root)
+    {
+        Node* current = root;
+    
+        while (current && current->r_ch != NULL)
+            current = current->r_ch;
+        return current;
+    }
+    Node *previous_node(Node *n)
+    {
+        if (n->l_ch)
+            return this->find_max(n->l_ch);
+        Node* p = n->parent;
+        while (p != NULL && n == p->l_ch) {
+            n = p;
+            p = p->parent;
+        }
+        return p;
     }
 };
