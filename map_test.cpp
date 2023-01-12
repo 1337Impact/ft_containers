@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 08:34:37 by mbenkhat          #+#    #+#             */
-/*   Updated: 2023/01/10 11:28:53 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2023/01/12 11:55:42 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "map.hpp"
 #include <map>
 
-#define tmp ft
+#define tmp std
 
 int main()
 {
@@ -45,36 +45,33 @@ int main()
 
 
 
+    // typedef tmp::map<int, std::string>::iterator iter;
 
     tmp::map<int, std::string> m;
-    // m.insert(std::make_pair(-20, "50!"));
-    m.insert(std::make_pair(1, "12!"));
-    m.insert(std::make_pair(2, "12!"));
-    m.insert(std::make_pair(3, "20!"));
-    m.insert(std::make_pair(4, "50!"));
-    m.insert(std::make_pair(5, "60!"));
+    m.insert(std::make_pair(4, "40!"));
+    m.insert(std::make_pair(1, "10!"));
+    m.insert(std::make_pair(3, "30!"));
     m.insert(std::make_pair(6, "60!"));
+    m.insert(std::make_pair(2, "20!"));
+    m.insert(std::make_pair(5, "50!"));
     std::cout << "********************" << std::endl;
-    // m[20] = "hola";
-    // std::cout << "size: " << m.size() << std::endl;
-    m.erase(m.begin(), m.end());
-    // m.erase(1);
-    // m.erase(2);
-    // m.erase(3);
-    // m.erase(5);
-    // std::cout << m.erase(5);
-    // m.erase(6);
-    // std::cout << "size: " << m.size() << std::endl;
-    // iter  it2 = m.begin();
-    // it2++;
-    // std::cout << it->first << std::endl;
-    // std::cout << it2->first << std::endl;
-    // std::cout << it2->first << std::endl;
-    // std::cout << (it == it2) << std::endl;
-    // // it++;
-    typedef tmp::map<int, std::string>::iterator iter;
-    iter  it = m.begin();
-    for (; it != m.end(); it++)
-        std::cout << it->first << "    " << it->second << std::endl;
-    // system("leaks test");
+    // m.clear();
+    m.erase(m.begin());
+    m.erase(m.begin());
+    m.erase(m.begin());
+    m.erase(m.begin());
+    m.erase(m.begin());
+    m.erase(m.begin());
+    
+    
+    std::cout << m.size() << std::endl;
+    // for (; it != m.end(); it++)
+        // std::cout << it->first << "    " << it->second << std::endl;
+    // std::cout << (it == m.end()) << std::endl;
+    // iter  it = m.end();
+    // it--;
+    // it++;
+    // it--;
+    // std::cout << it->first << "    " << it->second << std::endl;
+
 }

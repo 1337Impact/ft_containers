@@ -1,0 +1,182 @@
+c++ -Wall -Wextra -Werror -std=c++98 map_test.cpp -o test
+In file included from map_test.cpp:14:
+./map.hpp:180:15: error: field of type 'bst<int, std::__1::basic_string<char> >' has private destructor
+        bst<Key, T>             _tree;
+                                ^
+map_test.cpp:50:32: note: in implicit destructor for 'ft::map<int, std::__1::basic_string<char>, std::__1::less<int>, std::__1::allocator<std::__1::pair<const int, std::__1::basic_string<char> > > >' first required here
+    tmp::map<int, std::string> m;
+                               ^
+./bst.hpp:56:5: note: declared private here
+    ~bst(){}
+    ^
+In file included from map_test.cpp:14:
+./map.hpp:183:23: error: field of type 'bst<int, std::__1::basic_string<char> >' has private default constructor
+        :_size(0), _alloc(), _tree()
+                             ^
+map_test.cpp:50:32: note: in instantiation of member function 'ft::map<int, std::__1::basic_string<char>, std::__1::less<int>, std::__1::allocator<std::__1::pair<const int, std::__1::basic_string<char> > > >::map' requested here
+    tmp::map<int, std::string> m;
+                               ^
+./bst.hpp:53:5: note: declared private here
+    bst():_root(0), _size(0), _first_n(0), _last_n(0){}
+    ^
+In file included from map_test.cpp:14:
+./map.hpp:180:15: error: field of type 'bst<int, std::__1::basic_string<char> >' has private destructor
+        bst<Key, T>             _tree;
+                                ^
+./bst.hpp:56:5: note: declared private here
+    ~bst(){}
+    ^
+In file included from map_test.cpp:14:
+./map.hpp:239:21: error: 'find' is a private member of 'bst<int, std::__1::basic_string<char> >'
+                node *tmp = _tree.find(_tree._root, value.first);
+                                  ^
+map_test.cpp:51:7: note: in instantiation of member function 'ft::map<int, std::__1::basic_string<char>, std::__1::less<int>, std::__1::allocator<std::__1::pair<const int, std::__1::basic_string<char> > > >::insert' requested here
+    m.insert(std::make_pair(4, "40!"));
+      ^
+./bst.hpp:104:11: note: declared private here
+    Node *find(Node *root, const key_type& value)
+          ^
+In file included from map_test.cpp:14:
+./map.hpp:246:31: error: 'insert' is a private member of 'bst<int, std::__1::basic_string<char> >'
+                        ret.first = iterator(_tree.insert(_new), _tree);
+                                             ~~~~~~^~~~~~
+./bst.hpp:77:8: note: declared private here
+        Node* insert( pointer value )
+              ^
+In file included from map_test.cpp:14:
+./map.hpp:246:45: error: calling a private constructor of class 'bst<int, std::__1::basic_string<char> >'
+                        ret.first = iterator(_tree.insert(_new), _tree);
+                                                                 ^
+./bst.hpp:54:5: note: declared private here
+    bst(const bst & other):_root(other._root), _size(other._size), _first_n(0), _last_n(0){
+    ^
+In file included from map_test.cpp:14:
+./map.hpp:246:45: error: temporary of type 'MapIterator<bst<int, std::__1::basic_string<char> >, bst<int, std::__1::basic_string<char> >::Node>::tree_type' (aka 'bst<int, std::__1::basic_string<char> >') has private destructor
+                        ret.first = iterator(_tree.insert(_new), _tree);
+                                                                 ^
+./bst.hpp:56:5: note: declared private here
+    ~bst(){}
+    ^
+In file included from map_test.cpp:14:
+./map.hpp:250:30: error: calling a private constructor of class 'bst<int, std::__1::basic_string<char> >'
+                        ret.first = iterator(tmp, _tree);
+                                                  ^
+./bst.hpp:54:5: note: declared private here
+    bst(const bst & other):_root(other._root), _size(other._size), _first_n(0), _last_n(0){
+    ^
+In file included from map_test.cpp:14:
+./map.hpp:250:30: error: temporary of type 'MapIterator<bst<int, std::__1::basic_string<char> >, bst<int, std::__1::basic_string<char> >::Node>::tree_type' (aka 'bst<int, std::__1::basic_string<char> >') has private destructor
+                        ret.first = iterator(tmp, _tree);
+                                                  ^
+./bst.hpp:56:5: note: declared private here
+    ~bst(){}
+    ^
+In file included from map_test.cpp:14:
+In file included from ./map.hpp:21:
+./map_iter.hpp:34:22: error: calling a private constructor of class 'bst<int, std::__1::basic_string<char> >'
+        MapIterator():_tree(tree_type()), _root(0)
+                            ^
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/utility:336:14: note: in instantiation of member function 'MapIterator<bst<int, std::__1::basic_string<char> >, bst<int, std::__1::basic_string<char> >::Node>::MapIterator' requested here
+    pair() : first(), second() {}
+             ^
+./map.hpp:238:29: note: in instantiation of member function 'std::__1::pair<MapIterator<bst<int, std::__1::basic_string<char> >, bst<int, std::__1::basic_string<char> >::Node>, bool>::pair' requested here
+                std::pair<iterator, bool> ret;
+                                          ^
+map_test.cpp:51:7: note: in instantiation of member function 'ft::map<int, std::__1::basic_string<char>, std::__1::less<int>, std::__1::allocator<std::__1::pair<const int, std::__1::basic_string<char> > > >::insert' requested here
+    m.insert(std::make_pair(4, "40!"));
+      ^
+./bst.hpp:53:5: note: declared private here
+    bst():_root(0), _size(0), _first_n(0), _last_n(0){}
+    ^
+In file included from map_test.cpp:14:
+In file included from ./map.hpp:21:
+./map_iter.hpp:34:22: error: temporary of type 'MapIterator<bst<int, std::__1::basic_string<char> >, bst<int, std::__1::basic_string<char> >::Node>::tree_type' (aka 'bst<int, std::__1::basic_string<char> >') has private destructor
+        MapIterator():_tree(tree_type()), _root(0)
+                            ^
+./bst.hpp:56:5: note: declared private here
+    ~bst(){}
+    ^
+In file included from map_test.cpp:14:
+In file included from ./map.hpp:21:
+./map_iter.hpp:34:16: error: field of type 'MapIterator<bst<int, std::__1::basic_string<char> >, bst<int, std::__1::basic_string<char> >::Node>::tree_type' (aka 'bst<int, std::__1::basic_string<char> >') has private copy constructor
+        MapIterator():_tree(tree_type()), _root(0)
+                      ^
+./bst.hpp:54:5: note: declared private here
+    bst(const bst & other):_root(other._root), _size(other._size), _first_n(0), _last_n(0){
+    ^
+In file included from map_test.cpp:14:
+In file included from ./map.hpp:21:
+./map_iter.hpp:30:12: error: field of type 'MapIterator<bst<int, std::__1::basic_string<char> >, bst<int, std::__1::basic_string<char> >::Node>::tree_type' (aka 'bst<int, std::__1::basic_string<char> >') has private destructor
+        tree_type _tree;
+                  ^
+./bst.hpp:56:5: note: declared private here
+    ~bst(){}
+    ^
+./bst.hpp:101:40: error: too few arguments to function call, single argument 'root' was not specified
+            this->_first_n == find_min();
+                              ~~~~~~~~ ^
+./bst.hpp:84:9: note: in instantiation of member function 'bst<int, std::__1::basic_string<char> >::update_first_last' requested here
+        update_first_last(a_node);
+        ^
+./map.hpp:246:31: note: in instantiation of member function 'bst<int, std::__1::basic_string<char> >::insert' requested here
+                        ret.first = iterator(_tree.insert(_new), _tree);
+                                                   ^
+map_test.cpp:51:7: note: in instantiation of member function 'ft::map<int, std::__1::basic_string<char>, std::__1::less<int>, std::__1::allocator<std::__1::pair<const int, std::__1::basic_string<char> > > >::insert' requested here
+    m.insert(std::make_pair(4, "40!"));
+      ^
+./bst.hpp:196:5: note: 'find_min' declared here
+    Node *find_min(Node* root)
+    ^
+In file included from map_test.cpp:14:
+In file included from ./map.hpp:21:
+./map_iter.hpp:37:40: error: field of type 'MapIterator<bst<int, std::__1::basic_string<char> >, bst<int, std::__1::basic_string<char> >::Node>::tree_type' (aka 'bst<int, std::__1::basic_string<char> >') has private copy constructor
+        MapIterator(node* n, tree_type  tree):_tree(tree), _root(n)
+                                              ^
+./map.hpp:246:16: note: in instantiation of member function 'MapIterator<bst<int, std::__1::basic_string<char> >, bst<int, std::__1::basic_string<char> >::Node>::MapIterator' requested here
+                        ret.first = iterator(_tree.insert(_new), _tree);
+                                    ^
+map_test.cpp:51:7: note: in instantiation of member function 'ft::map<int, std::__1::basic_string<char>, std::__1::less<int>, std::__1::allocator<std::__1::pair<const int, std::__1::basic_string<char> > > >::insert' requested here
+    m.insert(std::make_pair(4, "40!"));
+      ^
+./bst.hpp:54:5: note: declared private here
+    bst(const bst & other):_root(other._root), _size(other._size), _first_n(0), _last_n(0){
+    ^
+In file included from map_test.cpp:14:
+In file included from ./map.hpp:21:
+./map_iter.hpp:30:12: error: field of type 'MapIterator<bst<int, std::__1::basic_string<char> >, bst<int, std::__1::basic_string<char> >::Node>::tree_type' (aka 'bst<int, std::__1::basic_string<char> >') has private destructor
+        tree_type _tree;
+                  ^
+./bst.hpp:56:5: note: declared private here
+    ~bst(){}
+    ^
+In file included from map_test.cpp:14:
+In file included from ./map.hpp:21:
+./map_iter.hpp:30:12: error: field of type 'MapIterator<bst<int, std::__1::basic_string<char> >, bst<int, std::__1::basic_string<char> >::Node>::tree_type' (aka 'bst<int, std::__1::basic_string<char> >') has private destructor
+        tree_type _tree;
+                  ^
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/utility:316:29: note: in instantiation of member function 'MapIterator<bst<int, std::__1::basic_string<char> >, bst<int, std::__1::basic_string<char> >::Node>::~MapIterator' requested here
+struct _LIBCPP_TEMPLATE_VIS pair
+                            ^
+./bst.hpp:56:5: note: declared private here
+    ~bst(){}
+    ^
+In file included from map_test.cpp:14:
+./map.hpp:306:19: error: 'find' is a private member of 'bst<int, std::__1::basic_string<char> >'
+                node *n = _tree.find(_tree._root, key);
+                                ^
+map_test.cpp:65:18: note: in instantiation of member function 'ft::map<int, std::__1::basic_string<char>, std::__1::less<int>, std::__1::allocator<std::__1::pair<const int, std::__1::basic_string<char> > > >::find' requested here
+    iter fit = m.find(2096628693);
+                 ^
+./bst.hpp:104:11: note: declared private here
+    Node *find(Node *root, const key_type& value)
+          ^
+In file included from map_test.cpp:14:
+./map.hpp:308:23: error: calling a private constructor of class 'bst<int, std::__1::basic_string<char> >'
+                        return iterator(n, this->_tree);
+                                           ^
+./bst.hpp:54:5: note: declared private here
+    bst(const bst & other):_root(other._root), _size(other._size), _first_n(0), _last_n(0){
+    ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+make: *** [map] Error 1

@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 20:04:27 by mbenkhat          #+#    #+#             */
-/*   Updated: 2023/01/10 15:03:10 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2023/01/12 11:54:02 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,134 +17,13 @@
 #include <utility>
 #include "bst.hpp"
 #include <vector>
+#include <iterator>
 #include <stdexcept>
+#include "map_iter.hpp"
 
 
 namespace ft
 {
-
-template <class Iter>
-class MapIterator
-{
-public:
-	typedef Iter 							tree_type;
-	typedef	typename Iter::pair_type 		pair_type;
-	typedef typename Iter::Node 			node;
-	typedef pair_type&						reference;
-	typedef pair_type*						pointer;
-	typedef std::ptrdiff_t 					difference_type;
-	typedef typename tree_type::mapper_type	iterator_mapper;
-	
-
-public:
-	tree_type _tree;
-	iterator_mapper _mapper;
-	
-public:
-	MapIterator(tree_type tree = tree_type()):_tree(tree), _mapper(){}
-	MapIterator(iterator_mapper mapper):_mapper(mapper)
-	{
-	}
-	MapIterator(const MapIterator &other)
-	:_tree(other._tree), _mapper(other._mapper){}
-	~MapIterator(){}
-	MapIterator & operator = (const MapIterator &other)
-	{
-		this->_tree = other._tree;
-		return (*this);
-	}
-	bool operator==(const MapIterator & other)
-	{
-		return (this->_mapper == other._mapper);
-	}
-	bool operator!=(const MapIterator & other)
-	{
-		return (this->_mapper != other._mapper);
-	}
-	reference operator*(void)
-	{
-		return (*(*this->_mapper));
-	}
-	pointer operator->()
-	{
-		return (*(this->_mapper.base()));
-	}
-	
-	MapIterator operator++ (int)
-	{
-		MapIterator<tree_type> tmp(*this);
-		this->_mapper++;
-		return (tmp);
-	}
-	MapIterator operator++ (void)
-	{
-		++this->_mapper;
-		return (*this);
-	}
-	MapIterator operator-- (int)
-	{
-		MapIterator<tree_type> tmp(*this);
-		this->_mapper--;
-		return (tmp);
-	}
-	MapIterator operator-- (void)
-	{
-		--this->_mapper;
-		return (*this);
-	}
-// {
-	MapIterator operator+( int nbr )
-	{
-		MapIterator<tree_type> tmp(*this);
-		tmp._mapper = this->_mapper + nbr;
-		return tmp;
-	}
-
-	// MapIterator operator-( int nbr )
-	// {
-	// 	MapIterator<tree_type> tmp(this->_tree);
-	// 	tmp.v_it = v_it - nbr;
-	// 	return tmp;
-	// }
-
-	// difference_type operator-(const MapIterator &other)
-	// {
-	// 	return (this->v_it - other.v_it);
-	// }
-
-	// bool operator < (const MapIterator &obj)
-	// {
-	// 	return this->v_it < obj.v_it;
-	// }
-	// bool operator > (const MapIterator &obj)
-	// {
-	// 	return this->v_it > obj.v_it;
-	// }
-	// bool operator <= (const MapIterator &obj)
-	// {
-	// 	return this->v_it <= obj.v_it;
-	// }
-	// bool operator >= (const MapIterator &obj)
-	// {
-	// 	return this->v_it >= obj.v_it;
-	// }
-	// MapIterator operator+= (const int nbr)
-	// {
-	// 	this->v_it += nbr;
-	// 	return (*this);
-	// } 
-	// MapIterator operator-= (const int nbr)
-	// {
-	// 	this->v_it -= nbr;
-	// 	return (*this);
-	// }
-	// pair_type operator[] (const int nbr)
-	// {
-	// 	return (*(v_it + nbr));
-	// }
-// }
-};
-
 template<
 	class Key,
 	class T,
@@ -165,8 +44,11 @@ public:
 	typedef typename allocator_type::size_type       size_type;
 	typedef typename allocator_type::difference_type difference_type;
 	typedef	bst<Key, T>								tree_type;
-	typedef	MapIterator<tree_type>					iterator;
-	typedef	MapIterator<tree_type const>			const_iterator;
+	typedef	typename bst<Key, T>::Node				node;
+	typedef	MapIterator<tree_type, node>				iterator;
+	typedef	MapIterator<tree_type const, node const>	const_iterator;
+	typedef	std::reverse_iterator<iterator>				reverse_iterator;
+	typedef	std::reverse_iterator<const_iterator>		const_reverse_iterator;
 	
 
 
@@ -174,7 +56,6 @@ private:
 	size_type		_size;
 	allocator_type	_alloc;
 	bst<Key, T>		_tree;
-	typedef typename bst<Key, T>::Node t_node;
 public:
 	map()
 	:_size(0), _alloc(), _tree()
@@ -194,7 +75,7 @@ public:
 
 	// Capacity
 	bool empty() const{
-		return (_tree._root == nullptr);
+		return (this->_tree._size == 0);
 	}
 	size_type size() const{
 		return (_tree.size());
@@ -206,21 +87,21 @@ public:
 	//Element access
 	mapped_type &at(const key_type& key)
 	{
-		t_node *res = _tree.find(_tree._root, key);
+		node *res = _tree.find(_tree._root, key);
 		if (!res)
 			throw std::out_of_range("out ofd range!");
 		return res->value->second;
 	}
 	const mapped_type& at (const key_type& key) const
 	{		
-		t_node *res = _tree.find(_tree._root, key);
+		node *res = _tree.find(_tree._root, key);
 		if (!res)
 			throw std::out_of_range("out of range!");
 		return res->value->second;
 	}
 
 	mapped_type& operator[] (const key_type& key){
-		t_node *res = _tree.find(_tree._root, key);
+		node *res = _tree.find(_tree._root, key);
 		if (res)
 			return res->value->second;
 		else{
@@ -232,19 +113,20 @@ public:
 	
 	std::pair<iterator, bool> insert( const value_type& value )
 	{
-		value_type *_new = _alloc.allocate(1);
-		_alloc.construct(_new, value);
 		std::pair<iterator, bool> ret;
-		std::pair<bool, size_type> res = _tree.insert(_new);
-		if (res.first)
+		node *tmp = _tree.find(_tree._root, value.first);
+		if (!tmp)
 		{
-			ret.first = this->begin() + res.second;
-			ret.second = 1;
+			// alocate node
+			value_type *_new = _alloc.allocate(1);
+			_alloc.construct(_new, value);
+
+			ret.first = iterator(_tree.insert(_new), &_tree);
+			ret.second = true;
 		}
-		else
-		{
-			ret.first = this->begin() + res.second;
-			ret.second = 0;
+		else{
+			ret.first = iterator(tmp, &_tree);
+			ret.second = false;
 		}
 		return ret;
 	}
@@ -260,7 +142,7 @@ public:
 
 	size_type erase (const key_type& k)
 	{
-		t_node *node = _tree.find(_tree._root, k);
+		node *node = _tree.find(_tree._root, k);
 		if (node)
 		{
 			_alloc.destroy(node->value);
@@ -275,14 +157,10 @@ public:
 	}
 	void erase (iterator first, iterator last)
 	{
-		std::vector<key_type> v;
 		for (; first != last; first++)
-			v.push_back(first->first);
-		for (size_t i = 0; i < v.size(); i++)
-		{
-				this->erase(v[i]);
-		}
+				this->erase(first);
 	}
+
 	void swap (map& x)
 	{	
 		map tmp;
@@ -301,17 +179,49 @@ public:
 	{
 		this->erase(this->begin(), this->end());
 	}
+
+	iterator find(const key_type& key)
+	{
+		node *n = _tree.find(_tree._root, key);
+		if (n)
+			return iterator(n, &(this->_tree));
+		else
+			return this->end();
+	}
+	const_iterator find (const key_type& k) const;
+
+	// Iterators
 	iterator begin()
 	{
-		return iterator(_tree.begin());
+		return iterator(_tree.find_min(this->_tree._root), &(this->_tree));
 	}
 	iterator end()
 	{
-		return iterator(_tree.end());
+		return iterator(_tree.end(), &(this->_tree));
 	}
-	size_type size( void )
+	const_iterator begin() const
 	{
-		return (_tree.size());
+		return const_iterator(_tree.find_min(this->_tree._root), &(this->_tree));
+	}
+	const_iterator end() const
+	{
+		return const_iterator(_tree.end(), &(this->_tree));
+	}
+	reverse_iterator rbegin()
+	{
+		return reverse_iterator(this->end());
+	}
+	reverse_iterator rend()
+	{
+		return reverse_iterator(this->begin());
+	}
+	const_reverse_iterator rbegin() const
+	{
+		return const_reverse_iterator(this->end());
+	}
+	const_reverse_iterator rend() const
+	{
+		return const_reverse_iterator(this->begin());
 	}
 };
 }
