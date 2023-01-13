@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 20:17:36 by mbenkhat          #+#    #+#             */
-/*   Updated: 2023/01/12 11:52:04 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2023/01/13 09:40:27 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ public:
             this->_last_n = this->_last_n->parent;
     }
 
-    Node *find(Node *root, const key_type& value)
+    Node *find(Node *root, const key_type& value) const
     {
         if (!root)
             return 0;
@@ -128,30 +128,6 @@ public:
 		}
         return (0);
     }
-
-    // void r_remove(Node *_node)
-    // {
-    //     if (!_node)
-    //         return ;
-    //     if (_node->l_ch == NULL){
-    //         if (_node->pos == LEFT)
-    //             _node->parent->l_ch = _node->r_ch;
-    //         else if (_node->pos == RIGHT)
-    //             _node->parent->r_ch = _node->r_ch;
-    //     }
-    //     else if (_node->r_ch == NULL){
-    //         if (_node->pos == LEFT)
-    //             _node->parent->l_ch = _node->l_ch;
-    //         else if (_node->pos == RIGHT)
-    //             _node->parent->r_ch = _node->l_ch;
-    //     }
-    //     else
-    //     {
-    //         Node* tmp = find_min(_node->r_ch);
-    //         _node->value = tmp->value;
-    //         remove(tmp);
-    //     }
-    // }
 
     Node* deleteNode(Node* root, key_type key)
     {
@@ -189,22 +165,12 @@ public:
         this->_size--;
     }
 
-    // void Inorder(Node* root)
-    // { 
-    //     if (!root) {
-    //         return;
-    //     }
-    //     Inorder(root->l_ch);
-    //     std::cout << root->value->first << "  " << root->value->second << std::endl;
-    //     Inorder(root->r_ch);
-    // }
-
     size_type size( void ) const
     {
         return (_size);
     }
 
-    Node *find_min(Node* root)
+    Node *find_min(Node* root) constf
     {
         Node* current = root;
     
@@ -213,7 +179,7 @@ public:
         return current;
     }
 
-    Node *find_max(Node* root)
+    Node *find_max(Node* root) const
     {
         Node* current = root;
     
@@ -221,13 +187,13 @@ public:
             current = current->r_ch;
         return current;
     }
-    Node *end()
+    Node *end() const
     {
         _end->parent = _last_n;
         return _end;
     }
 
-    Node *next_node(Node *n)
+    Node *next_node(Node *n) const
     {
         if (n == _last_n)
             return this->end();
@@ -242,7 +208,7 @@ public:
         }
         return p;
     }
-    Node *previous_node(Node *n)
+    Node *previous_node(Node *n) const
     {
         if (n->l_ch)
             return this->find_max(n->l_ch);
