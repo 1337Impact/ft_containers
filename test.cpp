@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 11:16:36 by mbenkhat          #+#    #+#             */
-/*   Updated: 2023/01/09 08:49:52 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2023/01/14 10:54:26 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 #include <memory>
 #include "vector.hpp"
 
-// template <typename T>
+class callit;
 class test
 {
 private:
     /* data */
-public:
     int b;
+public:
     test(/* args */)
     {
         std::cout << "constructed\n";
@@ -62,19 +62,18 @@ public:
     }
 };
 
-void take_it(test & obj = (test a = test()))
+friend void f(test &t)
 {
-    test &ref = obj;
+    std::cout << t.b << std::endl;
 }
 
-#define tmp std
 
 
-#include <iterator>
 int main()
 {
-    test t(13);
-    take_it(t);
+    test t(20);
+    // callit c;
+    f(t);
     
     return (0);
 }

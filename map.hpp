@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 20:04:27 by mbenkhat          #+#    #+#             */
-/*   Updated: 2023/01/13 16:40:46 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2023/01/14 09:01:48 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ namespace ft
 		public:
 			typedef Key                                      key_type;
 			typedef T                                        mapped_type;
-			typedef std::pair<const key_type, mapped_type>        value_type;
+			typedef std::pair<const key_type, mapped_type>   value_type;
 			typedef Compare                                  key_compare;
 			typedef Compare                                  value_compare;
 			typedef Allocator                                allocator_type;
@@ -81,7 +81,7 @@ namespace ft
 
 			~map()
 			{
-				
+				clear();
 			}
 
 			//Operator=
@@ -137,7 +137,6 @@ namespace ft
 				node *tmp = _tree.find(_tree._root, value.first);
 				if (!tmp)
 				{
-					// alocate node
 					value_type *_new = _alloc.allocate(1);
 					_alloc.construct(_new, value);
 
@@ -267,6 +266,19 @@ namespace ft
 				node *n = _tree.find_min();
 			}
 			const_iterator lower_bound (const key_type& k) const;
+			
+
+			std::pair<iterator,iterator>             equal_range (const key_type& key)
+			{
+				std::pair<iterator,iterator> ret;
+				iterator it = this->find(key);
+				if (it != this->end())
+				{
+					ret = std::make_pair(it, ++it);
+				}
+				return ret;
+			}
+			std::pair<const_iterator,const_iterator> equal_range (const key_type& key) const;
 
 
 			//Allocator
